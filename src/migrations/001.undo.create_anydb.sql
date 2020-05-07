@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS anytable;
+DROP TYPE IF EXISTS anytype;
