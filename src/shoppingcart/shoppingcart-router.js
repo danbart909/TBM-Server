@@ -21,3 +21,5 @@ cartRouter
     })
     .catch(next)
   })
+
+module.exports = cartRouter

@@ -12,7 +12,7 @@ const serializeProduct = product => ({
   title: product.title,
   description: product.description,
   category: product.category,
-  price: product.price,
+  price: Number(product.price),
   url: product.url
 })
 
@@ -50,3 +50,5 @@ productsRouter
   .get((req, res) => {
     res.json(serializeProduct(res.product))
   })
+
+  module.exports = productsRouter
