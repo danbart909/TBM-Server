@@ -2,7 +2,7 @@
 
 Here is the repository for the The Black Market's back end.
 
-## Server credentials
+## Database credentials
 
 ### Host:
 
