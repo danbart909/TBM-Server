@@ -5,7 +5,7 @@ const logger = require('../logger')
 const ProductsService = require('./products-service')
 
 const productsRouter = express.Router()
-const jsonParser = experss.json()
+const jsonParser = express.json()
 
 const serializeProduct = product => ({
   id: product.id,
@@ -22,8 +22,8 @@ productsRouter
   .get((req, res, next) => {
     ProductsService.getAllProducts(req.app.get('db'))
     .then(products => {
-      // res.json(products.map(serializeProduct))
-      res.json(products)
+      res.json(products.map(serializeProduct))
+      // res.json(products)
     })
     .catch(next)
   })
