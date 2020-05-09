@@ -12,7 +12,7 @@ const serializeCart = cart => ({
 })
 
 cartRouter
-  .router('/')
+  .route('/')
 
   .get((req, res, next) => {
     ShoppingCartService.getAllCart(req.app.get('db'))

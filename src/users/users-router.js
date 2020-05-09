@@ -13,7 +13,7 @@ const serializeUsers = user => ({
 })
 
 userRouter
-  .router('/')
+  .route('/')
 
   .get((req, res, next) => {
     UserService.getAllUsers(req.app.get('db'))
