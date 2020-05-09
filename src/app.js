@@ -6,7 +6,9 @@ const cors = require('cors')
 const { NODE_ENV, API_TOKEN } = require('./config')
 const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
-const anyRouter = require('./any/any-router')
+const productsRouter = require('./products/products-router')
+const cartRouter = require('./shoppingcart/shoppingcart-router')
+const userRouter = require('./users/users-router')
 
 const app = express()
 
@@ -18,7 +20,9 @@ app
   .use(cors())
   .use(validateBearerToken)
   .use(express.json())
-  .use('/api/any', anyRouter)
+  .use('/api/products', productsRouter)
+  .use('/api/cart', cartRouter)
+  .use('/api/users', userRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')
