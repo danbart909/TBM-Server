@@ -3,6 +3,6 @@ CREATE TABLE products (
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   category TEXT NOT NULL,
-  price INTEGER NOT NULL,
+  price TEXT NOT NULL,
   url TEXT NOT NULL
 );

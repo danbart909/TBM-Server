@@ -38,10 +38,33 @@ productsRouter
         if (!product) {
           logger.error(`Product with id ${id} not found.`)
           return res.status(404).json({
-            error: { message: `Any Not Found` }
+            error: { message: `Product Not Found` }
           })
         }
         res.product = product
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    res.json(serializeProduct(res.product))
+  })
+
+productsRouter
+  .route('/:product_category')
+
+  .all((req, res, next) => {
+    const { category } = req.params
+    ProductsService.getByCategory(req.app.get('db'), category)
+      .then(category => {
+        if (!category) {
+          logger.error(`No products in category ${category} found.`)
+          return res.status(404).json({
+            error: { message: `Category Not Found` }
+          })
+        }
+        res.category = category
         next()
       })
       .catch(next)
