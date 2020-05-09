@@ -44,17 +44,17 @@ https://protected-oasis-11818.herokuapp.com
 
 ### Endpoints
 
-###### /api/products
+##### /api/products
 
-(gets all products)
+###### (gets all products)
 
-###### /api/products/:id
+##### /api/products/:id
 
-(gets info for product by id)
+###### (gets info for product by id)
 
-###### /api/products/category/:category
+##### /api/products/category/:category
 
-(current categories are animals, furniture, household, and vehicles)
+###### (current categories are animals, furniture, household, and vehicles)
 
     
     
