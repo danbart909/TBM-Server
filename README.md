@@ -44,8 +44,9 @@ https://protected-oasis-11818.herokuapp.com
 
 ### Endpoints
 
-/api/products (gets all products)
-/api/products/:product_id (gets info for product by id)
+/api/products (gets all products) ////// 
+/api/products/:id (gets info for product by id) ////// 
+/api/products/category/:category (gets products by category)
 
 
     
