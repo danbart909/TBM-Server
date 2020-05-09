@@ -50,3 +50,6 @@ productsRouter
   .get((req, res) => {
     res.json(serializeProduct(res.product))
   })
+
+
+module.exports = productsRouter
