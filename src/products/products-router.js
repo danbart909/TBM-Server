@@ -12,7 +12,7 @@ const serializeProduct = product => ({
   title: product.title,
   description: product.description,
   category: product.category,
-  price: Number(product.price),
+  price: product.price,
   url: product.url
 })
 
@@ -23,9 +23,31 @@ productsRouter
     ProductsService.getAllProducts(req.app.get('db'))
     .then(products => {
       res.json(products.map(serializeProduct))
-      // res.json(products)
     })
     .catch(next)
+  })
+
+  productsRouter
+  .route('/category/:category')
+
+  .all((req, res, next) => {
+    const { category } = req.params
+    ProductsService.getByCategory(req.app.get('db'), category)
+      .then(category => {
+        if (!category) {
+          logger.error(`No products in category ${category} found.`)
+          return res.status(404).json({
+            error: { message: `Category Not Found` }
+          })
+        }
+        res.category = category
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    res.json(res.category)
   })
 
 productsRouter
@@ -49,30 +71,6 @@ productsRouter
 
   .get((req, res) => {
     res.json(serializeProduct(res.product))
-  })
-
-productsRouter
-  .route('/:category')
-
-  .all((req, res, next) => {
-    const { category } = req.params
-    ProductsService.getByCategory(req.app.get('db'), category)
-      .then(category => {
-        if (!category) {
-          logger.error(`No products in category ${category} found.`)
-          return res.status(404).json({
-            error: { message: `Category Not Found` }
-          })
-        }
-        res.category = category
-        next()
-      })
-      .catch(next)
-  })
-
-  .get((req, res) => {
-    // res.json(serializeProduct(res.product))
-    res.json(res.product)
   })
 
   module.exports = productsRouter
