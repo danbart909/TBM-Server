@@ -12,7 +12,7 @@ const serializeProduct = product => ({
   title: product.title,
   description: product.description,
   category: product.category,
-  price: product.price,
+  price: Number(product.price),
   url: product.url
 })
 
@@ -29,7 +29,7 @@ productsRouter
   })
 
 productsRouter
-  .route('/:product_id')
+  .route('/:id')
 
   .all((req, res, next) => {
     const { id } = req.params
@@ -38,7 +38,7 @@ productsRouter
         if (!product) {
           logger.error(`Product with id ${id} not found.`)
           return res.status(404).json({
-            error: { message: `Any Not Found` }
+            error: { message: `Product Not Found` }
           })
         }
         res.product = product
@@ -51,5 +51,28 @@ productsRouter
     res.json(serializeProduct(res.product))
   })
 
+productsRouter
+  .route('/:category')
 
-module.exports = productsRouter
+  .all((req, res, next) => {
+    const { category } = req.params
+    ProductsService.getByCategory(req.app.get('db'), category)
+      .then(category => {
+        if (!category) {
+          logger.error(`No products in category ${category} found.`)
+          return res.status(404).json({
+            error: { message: `Category Not Found` }
+          })
+        }
+        res.category = category
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    // res.json(serializeProduct(res.product))
+    res.json(res.product)
+  })
+
+  module.exports = productsRouter
