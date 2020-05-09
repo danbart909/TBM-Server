@@ -3,7 +3,7 @@ const ProductService = {
     return knex.select('*').from('products')
   },
   getById(knex, id) {
-    return knex.from('products').select('*').where('id', id).first()
+    return knex.select('*').from('products').where('id', id).first()
   },
   getByCategory(knex, category) {
     return knex.from('products').select('*').where('category', category)

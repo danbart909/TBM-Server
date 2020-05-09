@@ -29,7 +29,7 @@ productsRouter
   })
 
 productsRouter
-  .route('/:product_id')
+  .route('/:id')
 
   .all((req, res, next) => {
     const { id } = req.params
@@ -52,7 +52,7 @@ productsRouter
   })
 
 productsRouter
-  .route('/:product_category')
+  .route('/:category')
 
   .all((req, res, next) => {
     const { category } = req.params
@@ -71,7 +71,8 @@ productsRouter
   })
 
   .get((req, res) => {
-    res.json(serializeProduct(res.product))
+    // res.json(serializeProduct(res.product))
+    res.json(res.product)
   })
 
   module.exports = productsRouter
