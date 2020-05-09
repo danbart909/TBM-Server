@@ -5,7 +5,7 @@ const logger = require('../logger')
 const UserService = require('./users-service')
 
 const userRouter = express.Router()
-const jsonParser = experss.json()
+const jsonParser = express.json()
 
 const serializeUsers = user => ({
   id: user.id,

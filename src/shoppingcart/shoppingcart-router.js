@@ -5,7 +5,7 @@ const logger = require('../logger')
 const ShoppingCartService = require('./shoppingcart-service')
 
 const cartRouter = express.Router()
-const jsonParser = experss.json()
+const jsonParser = express.json()
 
 const serializeCart = cart => ({
   id: cart.id
