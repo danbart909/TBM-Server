@@ -22,7 +22,8 @@ productsRouter
   .get((req, res, next) => {
     ProductsService.getAllProducts(req.app.get('db'))
     .then(products => {
-      res.json(products.map(serializeProduct))
+      // res.json(products.map(serializeProduct))
+      res.json(products)
     })
     .catch(next)
   })
