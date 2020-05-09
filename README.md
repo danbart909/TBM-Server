@@ -44,11 +44,19 @@ https://protected-oasis-11818.herokuapp.com
 
 ### Endpoints
 
-/api/products (gets all products) ////// 
-/api/products/:id (gets info for product by id) ////// 
-/api/products/category/:category (current categories are animals, furniture, household, and vehicles)
+###### /api/products
 
+(gets all products)
 
+###### /api/products/:id
+
+(gets info for product by id)
+
+###### /api/products/category/:category
+
+(current categories are animals, furniture, household, and vehicles)
+
+    
     
 ## imgur account information
 
