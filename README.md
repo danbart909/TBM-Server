@@ -31,6 +31,17 @@ postgres://nqbolyypkxkepc:79b7464e689390907efce8739cd2b50c41e987319b52e9ac3c4d3f
 ### Heroku CLI
 
 heroku pg:psql postgresql-animated-06148 --app protected-oasis-11818
+
+## Heroku URL for Database
+
+### URL
+
+https://protected-oasis-11818.herokuapp.com
+
+### Endpoints
+
+/api/products (gets all products)
+/api/products/:product_id (gets info for product by id)
     
 ## imgur account information
 
