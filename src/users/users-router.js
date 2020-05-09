@@ -2,10 +2,10 @@ const path = require('path')
 const express = require('express')
 const xss = require('xss')
 const logger = require('../logger')
-const UserService = require('./users-service')
+const UsersService = require('./users-service')
 
 const userRouter = express.Router()
-const jsonParser = express.json()
+const jsonBodyParser = express.json()
 
 const serializeUsers = user => ({
   id: user.id,
@@ -13,14 +13,50 @@ const serializeUsers = user => ({
 })
 
 userRouter
-  .route('/')
+  //creates new user
+  .post('/', jsonBodyParser, (req, res, next) => {
+    const { password, username } = req.body
+    //first confirms required information is present
+    for (const field of ['username', 'password'])
+      if(!req.body[field])
+        return res.status(400).json({
+          error: `Missing '${field}' in request body`
+        })
+      
+      const passwordError = UsersService.validatePassword(password)
 
-  .get((req, res, next) => {
-    UserService.getAllUsers(req.app.get('db'))
-    .then(users => {
-      res.json(users.map(serializeCart))
-    })
-    .catch(next)
+      if(passwordError)
+        return res.status(400).json({ error: passwordError})
+
+      UsersService.hasUserWithUserName(
+        req.app.get('db'),
+        username
+      )
+        .then(hasUserWithUserName => {
+          if(hasUserWithUserName)
+            return res.status(400).json({ error: `Username already taken`})
+
+            return UsersService.hashPassword(password)
+              .then(hashedPassword => {
+                const newUser = {
+                  username,
+                  password: hashedPassword
+                }
+
+              return UsersService.insertUser(
+                req.app.get('db'),
+                newUser
+              )
+              .then(user => {
+                res
+                  .status(201)
+                  .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                  .json(UsersService.serializeUser(user))
+              })
+              })
+        res.send('ok')
+        })
+      .catch(next)
   })
 
 module.exports = userRouter

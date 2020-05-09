@@ -18,7 +18,7 @@ app
   }))
   .use(helmet())
   .use(cors())
-  .use(validateBearerToken)
+  // .use(validateBearerToken)
   .use(express.json())
   .use('/api/products', productsRouter)
   .use('/api/cart', cartRouter)
