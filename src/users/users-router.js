@@ -7,7 +7,7 @@ const UsersService = require('./users-service')
 const userRouter = express.Router()
 const jsonBodyParser = express.json()
 
-const serializeUsers = user => ({
+const serializeUser = user => ({
   id: user.id,
   username: user.username
 })

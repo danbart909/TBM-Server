@@ -9,6 +9,7 @@ const errorHandler = require('./error-handler')
 const productsRouter = require('./products/products-router')
 const cartRouter = require('./shoppingcart/shoppingcart-router')
 const userRouter = require('./users/users-router')
+const authRouter = require('./auth/auth-router')
 
 const app = express()
 
@@ -23,6 +24,7 @@ app
   .use('/api/products', productsRouter)
   .use('/api/cart', cartRouter)
   .use('/api/users', userRouter)
+  .use('/api/auth/login', authRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')
