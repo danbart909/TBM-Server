@@ -18,13 +18,16 @@ app
     skip: () => NODE_ENV === 'test'
   }))
   .use(helmet())
-  .use(cors())
+  .use(
+    cors({
+      origin: CLIENT_ORIGIN
+    }))
   // .use(validateBearerToken)
   .use(express.json())
   .use('/api/products', productsRouter)
   .use('/api/cart', cartRouter)
   .use('/api/users', userRouter)
-  .use('/api/auth/login', authRouter)
+  .use('/api/auth/', authRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')
