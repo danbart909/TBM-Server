@@ -18,10 +18,11 @@ app
     skip: () => NODE_ENV === 'test'
   }))
   .use(helmet())
-  .use(
-    cors({
-      origin: CLIENT_ORIGIN
-    }))
+  .use(cors())
+  // .use(
+  //   cors({
+  //     origin: CLIENT_ORIGIN
+  //   }))
   // .use(validateBearerToken)
   .use(express.json())
   .use('/api/products', productsRouter)

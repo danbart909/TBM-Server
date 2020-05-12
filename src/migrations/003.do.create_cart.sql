@@ -1,4 +1,4 @@
 CREATE TABLE cart (
-  id INTEGER REFERENCES users(cart_id),
-  products TEXT,
+  id SERIAL PRIMARY KEY,
+  FOREIGN KEY user_id REFERENCES users(id),
 );
