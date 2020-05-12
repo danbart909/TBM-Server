@@ -7,6 +7,11 @@ const ProductService = {
   },
   getByCategory(knex, category) {
     return knex.from('products').select('*').where('category', category)
+  },
+  getByTitle(knex, searchterm) {
+    return knex.from('products').select('*').whereRaw(`LOWER(title) LIKE '%${searchterm.toLowerCase()}%'`)
+
+    // .where('title', 'like', `%${searchterm}%`)
   }
 }
 
