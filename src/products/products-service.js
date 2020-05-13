@@ -2,6 +2,9 @@ const ProductService = {
   getAllProducts(knex) {
     return knex.select('*').from('products')
   },
+  getCategories(knex) {
+    return knex.from('products').columninfo('category')
+  },
   getById(knex, id) {
     return knex.select('*').from('products').where('id', id).first()
   },

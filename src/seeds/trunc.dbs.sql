@@ -1,4 +1,4 @@
-TRUNCATE order
-TRUNCATE cart
-TRUNCATE users
+TRUNCATE order;
+TRUNCATE cart;
+TRUNCATE users;
 TRUNCATE products;

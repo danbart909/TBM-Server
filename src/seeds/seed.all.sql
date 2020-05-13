@@ -26,3 +26,28 @@ VALUES
   ('Skateboard', 'description for Skateboard', 'vehicle', 125000, 'https://i.imgur.com/NQi69bj.jpg'),
   ('Space Shuttle', 'description for Space Shuttle', 'vehicle', 200, 'https://i.imgur.com/lFhrnJu.jpg'),
   ('TIE Fighter', 'description for TIE Fighter', 'vehicle', 5000000000, 'https://i.imgur.com/39whCAf.jpg');
+
+INSERT INTO users (username, password)
+VALUES
+  ('user1', 'password1'),
+  ('user2', 'password2'),
+  ('user3', 'password3');
+
+INSERT INTO cart (user_id)
+VALUES
+  (1),
+  (2),
+  (3);
+
+INSERT INTO orders (cart_id, product_id, quantity)
+VALUES
+  (1, 1, 1),
+  (1, 2, 4),
+  (1, 7, 2),
+  (2, 14, 1),
+  (2, 15, 1),
+  (2, 16, 2),
+  (3, 23, 1),
+  (3, 9, 2),
+  (3, 18, 1),
+  (3, 26, 1);

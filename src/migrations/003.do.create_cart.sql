@@ -1,4 +1,4 @@
 CREATE TABLE cart (
   id SERIAL PRIMARY KEY,
-  FOREIGN KEY user_id REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE SET NULL
 );

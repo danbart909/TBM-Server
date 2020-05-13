@@ -16,6 +16,23 @@ const serializeProduct = product => ({
   url: product.url
 })
 
+productsRouter
+.route('/categories')
+
+.get((req, res, next) => {
+  // const { searchterm } = req.query
+  // ProductsService.getByTitle(req.app.get('db'), searchterm)
+  ProductsService.getCategories(req.app.get('db'))
+    .then(products => {
+      res.json(products.map(serializeProduct))
+    })
+    .catch(next)
+})
+
+.get((req, res) => {
+  res.json(serializeProduct(res.product))
+})
+
 
 productsRouter
 .route('/search')
