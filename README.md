@@ -46,7 +46,7 @@ https://protected-oasis-11818.herokuapp.com
 
 #### /api/products/search?=searchterm=*input*
 
-##### search for title
+##### search for product by title
 
 ##### /api/products
 
@@ -58,7 +58,11 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### /api/products/category/:category
 
-###### current categories are animals, furniture, household, and vehicles
+###### lists current categories (which are currently animals, furniture, household, and vehicles)
+
+##### /api/orders/cart/:cart_id
+
+###### returns the list of products and their quantities in shopping cart by id
 
     
     
