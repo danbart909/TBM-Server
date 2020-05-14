@@ -4,6 +4,9 @@ const OrdersService = {
   },
   getById(knex, id) {
     return knex.select('*').from('orders').where('id', id).first()
+  },
+  getByCartId(knex, cart_id) {
+    return knex.select('*').from('orders').where('cart_id', cart_id)
   }
 }
 

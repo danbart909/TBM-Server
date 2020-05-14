@@ -41,6 +41,29 @@ ordersRouter
     res.json(res.order)
   })
 
+ordersRouter
+  .route('/cart/:cart_id')
+
+  .all((req, res, next) => {
+    const { cart_id } = req.params
+    OrdersService.getByCartId(req.app.get('db'), cart_id)
+      .then(orders => {
+        if (!orders) {
+          logger.error(`No orders were not found.`)
+          return res.status(404).json({
+            error: { message: `No Orders Found` }
+          })
+        }
+        res.orders = orders
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    res.json(res.orders)
+  })
+
 
 
   module.exports = ordersRouter
