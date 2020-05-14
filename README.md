@@ -48,13 +48,13 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### search for product by title
 
-##### /api/products
+#### /api/products
 
-###### gets all products
+##### gets all products
 
-##### /api/products/:id
+#### /api/products/:id
 
-###### gets info for product by id
+##### gets info for product by id
 
 ##### /api/products/category/:category
 
