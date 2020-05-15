@@ -56,9 +56,13 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### gets info for product by id
 
-#### GET /api/products/category/:category
+#### GET /api/products/category
 
 ##### lists current categories (which are currently animals, furniture, household, and vehicles)
+
+#### GET /api/products/category/:category
+
+##### lists all products in :category
 
 #### GET /api/cart/:id
 
