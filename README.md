@@ -66,11 +66,11 @@ https://protected-oasis-11818.herokuapp.com
 
 #### POST /api/cart
 
-##### requires: invoice_id, product_id, and quantity
+##### adds new item to current cart (requires: invoice_id, product_id, and quantity)
 
 #### PATCH /api/cart/:id
 
-##### requires: quantity
+##### updates quantity of item in cart (requires: quantity)
 
 #### DELETE /api/cart/:id
 
@@ -82,7 +82,7 @@ https://protected-oasis-11818.herokuapp.com
 
 #### PATCH /api/cart/history/:id
 
-##### checks out current shopping cart
+##### checks out current shopping cart (required: checked_out set to false)
 
     
     
