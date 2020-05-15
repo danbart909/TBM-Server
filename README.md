@@ -44,25 +44,45 @@ https://protected-oasis-11818.herokuapp.com
 
 ### Endpoints
 
-#### /api/products/search?=searchterm=*input*
+#### GET /api/products/search?=searchterm=*input*
 
 ##### search for product by title
 
-#### /api/products
+#### GET /api/products
 
 ##### gets all products
 
-#### /api/products/:id
+#### GET /api/products/:id
 
 ##### gets info for product by id
 
-#### /api/products/category/:category
+#### GET /api/products/category/:category
 
 ##### lists current categories (which are currently animals, furniture, household, and vehicles)
 
-#### /api/orders/cart/:cart_id
+#### GET /api/cart/:id
 
-##### returns the list of products and their quantities in shopping cart by id
+##### returns the current cart for user id
+
+#### POST /api/cart
+
+##### requires: invoice_id, product_id, and quantity
+
+#### PATCH /api/cart/:id
+
+##### requires: quantity
+
+#### DELETE /api/cart/:id
+
+##### deletes item in cart
+
+#### GET /api/cart/history/:id
+
+##### gets order history of user
+
+#### PATCH /api/cart/history/:id
+
+##### checks out current shopping cart
 
     
     
