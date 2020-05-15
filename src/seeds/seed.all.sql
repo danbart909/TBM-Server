@@ -29,17 +29,20 @@ VALUES
 
 INSERT INTO users (username, password)
 VALUES
-  ('user1', 'password1'),
-  ('user2', 'password2'),
-  ('user3', 'password3');
+  ('user1', 'Password1!'),
+  ('user2', 'Password2!'),
+  ('user3', 'Password3!');
 
-INSERT INTO cart (user_id)
+INSERT INTO invoices (user_id, checked_out)
 VALUES
-  (1),
-  (2),
-  (3);
+  (1, 'false'),
+  (2, 'false'),
+  (3, 'false'),
+  (1, 'true'),
+  (2, 'true'),
+  (3, 'true');
 
-INSERT INTO orders (cart_id, product_id, quantity)
+INSERT INTO invoice_products (invoice_id, product_id, quantity)
 VALUES
   (1, 1, 1),
   (1, 2, 4),
@@ -50,4 +53,13 @@ VALUES
   (3, 23, 1),
   (3, 9, 2),
   (3, 18, 1),
-  (3, 26, 1);
+  (4, 26, 1),
+  (4, 18, 2),
+  (4, 15, 1),
+  (5, 21, 1),
+  (5, 24, 4),
+  (5, 12, 8),
+  (5, 19, 3),
+  (6, 21, 1),
+  (6, 5, 88),
+  (6, 11, 3);

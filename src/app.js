@@ -6,10 +6,9 @@ const cors = require('cors')
 const { NODE_ENV, API_TOKEN } = require('./config')
 const errorHandler = require('./error-handler')
 const productsRouter = require('./products/products-router')
-const cartRouter = require('./shoppingcart/shoppingcart-router')
 const userRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
-const ordersRouter = require('./orders/orders-router')
+const invoiceRouter = require('./invoices/invoices-router')
 
 const app = express()
 
@@ -21,10 +20,9 @@ app
   .use(cors())
   .use(express.json())
   .use('/api/products', productsRouter)
-  .use('/api/cart', cartRouter)
   .use('/api/users', userRouter)
   .use('/api/auth', authRouter)
-  .use('/api/orders', ordersRouter)
+  .use('/api/cart', invoiceRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')
