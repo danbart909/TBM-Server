@@ -20,8 +20,8 @@ invoiceRouter
   })
 
   .post(jsonParser, (req, res, next) => {
-    const { invoice_id, product_id, quantity } = req.body
-    const newItem = { invoice_id, product_id, quantity }
+    const { id, product_id, quantity } = req.body
+    const newItem = { id, product_id, quantity }
 
     InvoiceService.insertInvoice(req.app.get('db'), newItem)
       .then(item => {
@@ -29,7 +29,7 @@ invoiceRouter
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `${item.id}`))
-          .json(item)
+          .json(item) 
       })
       .catch(next)
   })
@@ -76,6 +76,21 @@ invoiceRouter
       res.status(204).end()
     })
     .catch(next)
+  })
+
+  .post(jsonParser, (req, res, next) => {
+    const { invoice_id, product_id, quantity } = req.body
+    const newItem = { invoice_id, product_id, quantity }
+
+    InvoiceService.insertInvoice(req.app.get('db'), newItem)
+      .then(item => {
+        logger.info(`Product with id ${item.id} created.`)
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `${item.id}`))
+          .json(item)
+      })
+      .catch(next)
   })
 
 invoiceRouter

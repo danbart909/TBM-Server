@@ -3,13 +3,13 @@ const InvoiceService = {
     return knex.select('*').from('invoices')
   },
   getCartByUser(knex, id) {
-    return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', false)
+    return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', false).join('products', 'invoice_products.product_id', 'products.id')
   },
   getHistoryByUser(knex, id) {
     return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', true)
   },
-  insertInvoice(knex, newItem) {
-    return knex.insert(newItem).into('invoice_products').returning('*').then(rows => {
+  insertInvoice(knex, invoice_id, product_id, quantity) {
+    return knex.insert(product_id, quantity).into('invoice_products').where('invoice_id', invoice_id).returning('*').then(rows => {
       return rows[0]
     })
   },
