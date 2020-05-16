@@ -8,7 +8,7 @@ Here is the repository for the The Black Market's back end.
 
 ### Host:
 
-ec2-52-202-146-43.compute-1.amazonaws.com
+ec2-35-168-54-239.compute-1.amazonaws.com
     
 ### Database:
 
@@ -16,7 +16,7 @@ d2tvhidlfaub47
     
 ### User:
 
-nqbolyypkxkepc
+rrjvakuvnljofw
     
 ### Port:
 
@@ -24,7 +24,7 @@ nqbolyypkxkepc
     
 ### Password:
 
-79b7464e689390907efce8739cd2b50c41e987319b52e9ac3c4d3f662d551831
+9f853ac175a6eb2b8bde0b9f607745b874f6064a5b4690da8b57ae5b86172100
     
 ### URI:
 
@@ -44,21 +44,49 @@ https://protected-oasis-11818.herokuapp.com
 
 ### Endpoints
 
-#### /api/products/search?=searchterm=*input*
+#### GET /api/products/search?=searchterm=*input*
 
-##### search for title
+##### search for product by title
 
-##### /api/products
+#### GET /api/products
 
-###### gets all products
+##### gets all products
 
-##### /api/products/:id
+#### GET /api/products/:id
 
-###### gets info for product by id
+##### gets info for product by :id
 
-##### /api/products/category/:category
+#### GET /api/products/categories
 
-###### current categories are animals, furniture, household, and vehicles
+##### lists current categories (which are currently animals, furniture, household, and vehicles)
+
+#### GET /api/products/category/:category
+
+##### lists all products in :category
+
+#### GET /api/cart/:id
+
+##### returns the current cart for user id
+
+#### POST /api/cart
+
+##### adds new item to current cart (requires: invoice_id, product_id, and quantity)
+
+#### PATCH /api/cart/:id
+
+##### updates quantity of item in cart (requires: quantity)
+
+#### DELETE /api/cart/:id
+
+##### deletes item in cart
+
+#### GET /api/cart/history/:id
+
+##### gets order history of user
+
+#### PATCH /api/cart/history/:id
+
+##### checks out current shopping cart (required: checked_out set to false)
 
     
     
