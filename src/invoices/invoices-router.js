@@ -31,7 +31,7 @@ invoiceRouter
         res
           .status(201)
           // .location(path.posix.join(req.originalUrl, `${invoice_id.id}`))
-          .json(invoice_id_raw)
+          // .json(invoice_id_raw)
           let invoice_id = Number(invoice_id_raw)
           let newInvoice = {invoice_id, product_id, user_id, quantity}
           console.log(newInvoice)
