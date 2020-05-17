@@ -8,11 +8,19 @@ const InvoiceService = {
   getHistoryByUser(knex, id) {
     return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', true)
   },
-  insertInvoice(knex, user_id, product_id, quantity) {
-    return knex.insert(product_id, quantity).into('invoice_products').join('invoices', 'invoice_products.invoice_id', 'invoices.id').where('invoice_id', invoice_id).returning('*').then(rows => {
+  getCurrentCartId(knex, id) {
+    return knex.select('*').from('invoices').where('invoices.user_id', id).where('checked_out', false).pluck('id').then(function(id) {return id})
+  },
+  insertInvoice(knex, invoice_id, product_id, user_id, quantity) {
+    return knex.insert(invoice_id, product_id, user_id, quantity).into('invoice_products').returning('*').then(rows => {
       return rows[0]
     })
   },
+  // insertInvoice(knex, invoice_id, product_id, quantity) {
+  //   return knex.insert(product_id, quantity).into('invoice_products').where('invoice_id', invoice_id).returning('*').then(rows => {
+  //     return rows[0]
+  //   })
+  // },
   deleteInvoice(knex, id) {
     return knex('invoices').where({ id }).delete()
   },

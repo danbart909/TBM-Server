@@ -7,6 +7,7 @@ const { requireAuth } = require('../middleware/jwt-auth')
 
 const invoiceRouter = express.Router()
 const jsonParser = express.json()
+// const db = req.app.get('db')
 
 invoiceRouter
   .route('/')
@@ -21,21 +22,33 @@ invoiceRouter
 
   .post(jsonParser, (req, res, next) => {
     // const user_id = req.user_id
-    const user_id = 1
-    const { product_id, quantity } = req.body
-    const newItem = { user_id, product_id, quantity }
+    const { user_id, product_id, quantity } = req.body
+    // let invoice_id = ''
 
-    InvoiceService.insertInvoice(req.app.get('db'), user_id, product_id, quantity)
-      .then(item => {
-        logger.info(`Invoice with id ${item.id} created.`)
+    InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
+      .then(invoice_id_raw => {
+        console.log(invoice_id_raw)
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `${item.id}`))
-          .json(item) 
+          // .location(path.posix.join(req.originalUrl, `${invoice_id.id}`))
+          .json(invoice_id_raw)
+          let invoice_id = Number(invoice_id_raw)
+          let newInvoice = {invoice_id, product_id, user_id, quantity}
+          console.log(newInvoice)
+        InvoiceService.insertInvoice(req.app.get('db'), newInvoice)
+        // InvoiceService.insertInvoice(req.app.get('db'), invoice_id, product_id, user_id, quantity)
+
+          .then(invoice => {
+            res
+              .status(201)
+              // .location(path.posix.join(req.originalUrl, `${invoice.id}`))
+              .json(invoice)
+          })
+        .catch(next)
       })
       .catch(next)
   })
-
+    
 invoiceRouter
   .route('/:id')
 
@@ -139,3 +152,45 @@ invoiceRouter
     //     //     })
     //     //   }
     //     // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // .post(jsonParser, (req, res, next) => {
+    //   // const user_id = req.user_id
+    //   const user_id = 1
+    //   const { product_id, quantity } = req.body
+    //   let invoiceID = ''
+  
+    //   InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
+    //     .then(id => {
+    //       res
+    //         .status(201)
+    //         .location(path.posix.join(req.originalUrl, `${id}`))
+    //         .json(id)
+    //         invoiceID = id
+    //     })
+    //     .catch(next)
+      
+    //   InvoiceService.insertInvoice(req.app.get('db'), invoiceID, product_id, quantity)
+    //     .then(item => {
+    //       console.log(invoiceID, product_id, quantity, item)
+    //       logger.info(`Invoice with id ${item.id} created.`)
+    //       res
+    //         .status(201)
+    //         .location(path.posix.join(req.originalUrl, `${item.id}`))
+    //         .json(item) 
+    //     })
+    //     .catch(next)
+    //   })
