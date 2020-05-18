@@ -88,9 +88,9 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### empties specified user's cart (body requres: user_id)
 
-#### PATCH /api/cart/history/:id ***NOT WORKING!
+#### PATCH /api/cart/history/:id
 
-##### checks out current shopping cart (body requires: 'checked_out: false') & creates a new empty cart ***NOT WORKING!
+##### checks out current shopping cart (body requires: 'checked_out: false') & creates a new empty cart
 
     
     
