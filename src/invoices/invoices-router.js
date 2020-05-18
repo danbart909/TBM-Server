@@ -177,7 +177,12 @@ invoiceRouter
 
     InvoiceService.closeInvoice(req.app.get('db'), id, checked_out)
       .then(() => {
-        res.status(204).end()
+        res.status(204)
+        InvoiceService.createNewCart(req.app.get('db'), id)
+          .then(() => {
+            res.status(204).end()
+          })
+          .catch(next)
       })
       .catch(next)
   })
