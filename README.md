@@ -70,11 +70,11 @@ https://protected-oasis-11818.herokuapp.com
 
 #### POST /api/cart
 
-##### adds new item to user's cart (requires: user_id, product_id, and quantity)
+##### adds new item to user's cart (body requires: user_id, product_id, and quantity)
 
 #### PATCH /api/cart/invoice/:id
 
-##### updates quantity of item in cart (requires: quantity)
+##### updates quantity of item in cart (body requires: quantity)
 
 #### DELETE /api/cart/:id
 
@@ -83,6 +83,10 @@ https://protected-oasis-11818.herokuapp.com
 #### GET /api/cart/history/:id
 
 ##### gets order history of user
+
+#### DELETE /api/cart
+
+##### empties specified user's cart (body requres: user_id)
 
 #### PATCH /api/cart/history/:id ***NOT WORKING!
 
