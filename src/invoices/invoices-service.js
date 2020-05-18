@@ -21,11 +21,14 @@ const InvoiceService = {
   //     return rows[0]
   //   })
   // },
-  deleteInvoice(knex, id) {
-    return knex('invoices').where({ id }).delete()
+  getInvoice(knex, id) {
+    return knex('invoice_products').where({ id })
+  },
+  emptyCart(knex, invoice_id) {
+    return knex('invoice_products').where({ invoice_id }).delete()
   },
   updateInvoice(knex, id, quantity) {
-    return knex('invoices').where({ id }).update({ quantity })
+    return knex('invoice_products').where({ id }).update({ quantity })
   },
   closeInvoice(knex, id, checked_out) {
     return knex('users').where({ id }).join('invoices', 'users.id', 'invoices.user_id').update({ checked_out })

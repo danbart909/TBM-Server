@@ -23,20 +23,16 @@ invoiceRouter
   .post(jsonParser, (req, res, next) => {
     // const user_id = req.user_id
     const { user_id, product_id, quantity } = req.body
-    // let invoice_id = ''
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
-        console.log(invoice_id_raw)
         res
           .status(201)
           // .location(path.posix.join(req.originalUrl, `${invoice_id.id}`))
           // .json(invoice_id_raw)
           let invoice_id = Number(invoice_id_raw)
           let newInvoice = {invoice_id, product_id, user_id, quantity}
-          console.log(newInvoice)
         InvoiceService.insertInvoice(req.app.get('db'), newInvoice)
-        // InvoiceService.insertInvoice(req.app.get('db'), invoice_id, product_id, user_id, quantity)
 
           .then(invoice => {
             res
@@ -45,6 +41,24 @@ invoiceRouter
               .json(invoice)
           })
         .catch(next)
+      })
+      .catch(next)
+  })
+
+  .delete((req, res, next) => {
+    const { user_id } = req.body
+
+    InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
+      .then(invoice_id_raw => {
+        res
+          .status(201)
+          let invoice_id = Number(invoice_id_raw)
+          InvoiceService.emptyCart(req.app.get('db'), invoice_id)
+          .then(() => {
+            logger.info(`Items in cart with id ${invoice_id} deleted.`)
+            res.status(204).end()
+          })
+          .catch(next)
       })
       .catch(next)
   })
@@ -92,6 +106,47 @@ invoiceRouter
     })
     .catch(next)
   })
+
+
+
+
+
+
+invoiceRouter
+  .route('/invoice/:id')
+
+  .all((req, res, next) => {
+    const { id } = req.params
+    InvoiceService.getInvoice(req.app.get('db'), id)
+      .then(invoice => {
+        if (!invoice) {
+          logger.error(`Invoice ${id} not found.`)
+          return res.status(404).json({
+            error: { message: `Invoice ${id} not found.` }
+          })
+        }
+        res.invoice = invoice
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    res.json(res.invoice)
+  })
+
+  .patch(jsonParser, (req, res, next) => {
+    const { id } = req.params
+    const { quantity } = req.body
+
+    InvoiceService.updateInvoice(req.app.get('db'), id, quantity)
+      .then(() => {
+        res.status(204).end()
+      })
+      .catch(next)
+  })
+
+
 
 invoiceRouter
   .route('/history/:id')
