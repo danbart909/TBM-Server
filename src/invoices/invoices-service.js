@@ -8,8 +8,8 @@ const InvoiceService = {
   getHistoryByUser(knex, id) {
     return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', true).join('products', 'invoice_products.product_id', 'products.id')
   },
-  getCurrentCartId(knex, id) {
-    return knex.select('*').from('invoices').where('invoices.user_id', id).where('checked_out', false).pluck('id').then(function(id) {return id})
+  getCurrentCartId(knex, user_id) {
+    return knex.select('*').from('invoices').where('invoices.user_id', user_id).where('checked_out', false).pluck('id').then(function(id) {return id})
   },
   insertInvoice(knex, invoice_id, product_id, user_id, quantity) {
     return knex.insert(invoice_id, product_id, user_id, quantity).into('invoice_products').returning('*').then(rows => {

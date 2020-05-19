@@ -92,9 +92,9 @@ invoiceRouter
 
   .delete((req, res, next) => {
     const { id: product_id } = req.params
-    const { id } = req.body
+    const { user_id } = req.body
 
-    InvoiceService.getCurrentCartId(req.app.get('db'), id)
+    InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
           let invoice_id = Number(invoice_id_raw)
           InvoiceService.deleteItemInCart(req.app.get('db'), invoice_id, product_id)

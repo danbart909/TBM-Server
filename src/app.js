@@ -24,10 +24,6 @@ app
   .use('/api/auth', authRouter)
   .use('/api/cart', invoiceRouter)
 
-app.get('/', (req, res) => {
-  res.send('Hello, world!')
-})
-
 app.use(errorHandler)
 
 module.exports = app
