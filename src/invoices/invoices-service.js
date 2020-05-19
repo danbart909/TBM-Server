@@ -6,7 +6,7 @@ const InvoiceService = {
     return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', false).join('products', 'invoice_products.product_id', 'products.id')
   },
   getHistoryByUser(knex, id) {
-    return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', true)
+    return knex.select('*').from('invoices').where('invoices.user_id', id).join('invoice_products', 'invoices.id', 'invoice_products.invoice_id').where('checked_out', true).join('products', 'invoice_products.product_id', 'products.id')
   },
   getCurrentCartId(knex, id) {
     return knex.select('*').from('invoices').where('invoices.user_id', id).where('checked_out', false).pluck('id').then(function(id) {return id})
@@ -26,6 +26,9 @@ const InvoiceService = {
   },
   emptyCart(knex, invoice_id) {
     return knex('invoice_products').where({ invoice_id }).delete()
+  },
+  deleteItemInCart(knex, invoice_id, product_id) {
+    return knex('invoice_products').where({ invoice_id }).where({ product_id }).delete()
   },
   updateInvoice(knex, id, quantity) {
     return knex('invoice_products').where({ id }).update({ quantity })

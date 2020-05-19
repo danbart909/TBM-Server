@@ -26,14 +26,9 @@ invoiceRouter
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
-        res
-          .status(201)
-          // .location(path.posix.join(req.originalUrl, `${invoice_id.id}`))
-          // .json(invoice_id_raw)
           let invoice_id = Number(invoice_id_raw)
           let newInvoice = {invoice_id, product_id, user_id, quantity}
         InvoiceService.insertInvoice(req.app.get('db'), newInvoice)
-
           .then(invoice => {
             res
               .status(201)
@@ -50,8 +45,6 @@ invoiceRouter
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
-        res
-          .status(201)
           let invoice_id = Number(invoice_id_raw)
           InvoiceService.emptyCart(req.app.get('db'), invoice_id)
           .then(() => {
@@ -98,17 +91,21 @@ invoiceRouter
   })
 
   .delete((req, res, next) => {
-    const { id } = req.params
-    InvoiceService.deleteInvoice(req.app.get('db'), id)
-    .then(() => {
-      logger.info(`Product with id ${id} deleted.`)
-      res.status(204).end()
-    })
-    .catch(next)
+    const { id: product_id } = req.params
+    const { id } = req.body
+
+    InvoiceService.getCurrentCartId(req.app.get('db'), id)
+      .then(invoice_id_raw => {
+          let invoice_id = Number(invoice_id_raw)
+          InvoiceService.deleteItemInCart(req.app.get('db'), invoice_id, product_id)
+          .then(() => {
+            logger.info(`Items in cart with id ${invoice_id} deleted.`)
+            res.status(204).end()
+          })
+          .catch(next)
+      })
+      .catch(next)
   })
-
-
-
 
 
 
@@ -145,6 +142,24 @@ invoiceRouter
       })
       .catch(next)
   })
+
+  // .delete((req, res, next) => {
+  //   const { user_id } = req.body
+
+  //   InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
+  //     .then(invoice_id_raw => {
+  //       res
+  //         .status(201)
+  //         let invoice_id = Number(invoice_id_raw)
+  //         InvoiceService.emptyCart(req.app.get('db'), invoice_id)
+  //         .then(() => {
+  //           logger.info(`Items in cart with id ${invoice_id} deleted.`)
+  //           res.status(204).end()
+  //         })
+  //         .catch(next)
+  //     })
+  //     .catch(next)
+  // })
 
 
 
