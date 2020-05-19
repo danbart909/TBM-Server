@@ -52,7 +52,7 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### gets all products
 
-#### GET /api/products/:id
+#### GET /api/products/:id ( = product.id)
 
 ##### gets info for product by :id
 
@@ -60,11 +60,11 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### lists current categories (which are currently animals, furniture, household, and vehicles)
 
-#### GET /api/products/category/:category
+#### GET /api/products/category/:category ( = product.category)
 
 ##### lists all products in :category
 
-#### GET /api/cart/:id
+#### GET /api/cart/:id ( = user.id)
 
 ##### returns the current cart for user id
 
@@ -72,15 +72,15 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### adds new item to user's cart (body requires: user_id, product_id, and quantity)
 
-#### PATCH /api/cart/invoice/:id
+#### PATCH /api/cart/invoice/:id ( = invoice.id)
 
 ##### updates quantity of item in cart (body requires: quantity)
 
-#### DELETE /api/cart/:id
+#### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
 
-#### GET /api/cart/history/:id
+#### GET /api/cart/history/:id ( = user.id)
 
 ##### gets order history of user
 
@@ -88,9 +88,9 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### empties specified user's cart (body requres: user_id)
 
-#### PATCH /api/cart/history/:id ***NOT WORKING!
+#### PATCH /api/cart/history/:id
 
-##### checks out current shopping cart (body requires: 'checked_out: false') & creates a new empty cart ***NOT WORKING!
+##### checks out current shopping cart (body requires: 'checked_out: false') & creates a new empty cart
 
     
     
