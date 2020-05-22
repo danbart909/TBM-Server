@@ -72,10 +72,6 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### adds new item to user's cart (body requires: user_id, product_id, and quantity)
 
-#### PATCH /api/cart/invoice/:id ( = invoice.id)
-
-##### updates quantity of item in cart (body requires: quantity)
-
 #### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
