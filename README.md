@@ -64,7 +64,7 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### lists all products in :category
 
-#### GET /api/cart/:id ( = user.id)
+#### GET /api/cart
 
 ##### returns the current cart for user id
 
@@ -76,7 +76,7 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### deletes item in cart
 
-#### GET /api/cart/history/:id ( = user.id)
+#### GET /api/cart/history
 
 ##### gets order history of user
 
@@ -84,7 +84,7 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### empties specified user's cart (body requres: user_id)
 
-#### PATCH /api/cart/history/:id ( = user.id)
+#### PATCH /api/cart/history
 
 ##### checks out current shopping cart & creates a new empty cart
 
