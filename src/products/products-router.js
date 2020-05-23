@@ -59,7 +59,7 @@ productsRouter
     .catch(next)
   })
 
-  productsRouter
+productsRouter
   .route('/category/:category')
 
   .all((req, res, next) => {
@@ -78,9 +78,9 @@ productsRouter
       .catch(next)
   })
 
-  .get((req, res) => {
-    res.json(res.category)
-  })
+.get((req, res) => {
+  res.json(res.category)
+})
 
 productsRouter
   .route('/:id')
