@@ -20,10 +20,9 @@ invoiceRouter
     .catch(next)
   })
 
-  .post(requireAuth, jsonParser, (req, res, next) => {
-    const user_id = req.user_id
-    const { product_id, quantity } = req.body
-    // const { user_id, product_id, quantity } = req.body
+  .post(jsonParser, (req, res, next) => {
+    // const user_id = req.user_id
+    const { user_id, product_id, quantity } = req.body
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
@@ -41,9 +40,8 @@ invoiceRouter
       .catch(next)
   })
 
-  .delete(requireAuth, (req, res, next) => {
-    const user_id = req.user_id
-    // const { user_id } = req.body
+  .delete((req, res, next) => {
+    const { user_id } = req.body
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
@@ -61,10 +59,8 @@ invoiceRouter
 invoiceRouter
   .route('/:id')
 
-  .all(requireAuth, (req, res, next) => {
-    const { user_id } = req.user_id
-    console.log(user_id)
-    const id = user_id
+  .all((req, res, next) => {
+    const { id } = req.params
     InvoiceService.getCartByUser(req.app.get('db'), id)
       .then(invoice => {
         if (!invoice) {
@@ -83,9 +79,8 @@ invoiceRouter
     res.json(res.invoice)
   })
 
-  .patch(requireAuth, jsonParser, (req, res, next) => {
-    const { user_id } = req.user_id
-    const id = user_id
+  .patch(jsonParser, (req, res, next) => {
+    const { id } = req.params
     const { quantity } = req.body
 
     InvoiceService.updateInvoice(req.app.get('db'), id, quantity)
@@ -95,10 +90,9 @@ invoiceRouter
       .catch(next)
   })
 
-  .delete(requireAuth, (req, res, next) => {
+  .delete((req, res, next) => {
     const { id: product_id } = req.params
-    const { user_id } = req.user_id
-    // const { user_id } = req.body
+    const { user_id } = req.body
 
     InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
       .then(invoice_id_raw => {
@@ -118,7 +112,7 @@ invoiceRouter
 invoiceRouter
   .route('/invoice/:id')
 
-  .all(requireAuth, (req, res, next) => {
+  .all((req, res, next) => {
     const { id } = req.params
     InvoiceService.getInvoice(req.app.get('db'), id)
       .then(invoice => {
@@ -138,7 +132,7 @@ invoiceRouter
     res.json(res.invoice)
   })
 
-  .patch(requireAuth, jsonParser, (req, res, next) => {
+  .patch(jsonParser, (req, res, next) => {
     const { id } = req.params
     const { quantity } = req.body
 
@@ -172,9 +166,8 @@ invoiceRouter
 invoiceRouter
   .route('/history/:id')
 
-  .all(requireAuth, (req, res, next) => {
-    const { user_id } = req.user_id
-    const id = user_id
+  .all((req, res, next) => {
+    const { id } = req.params
     InvoiceService.getHistoryByUser(req.app.get('db'), id)
       .then(invoice => {
         if (!invoice) {
@@ -193,21 +186,26 @@ invoiceRouter
     res.json(res.invoice)
   })
 
-  .patch(requireAuth, jsonParser, (req, res, next) => {
-    const { user_id } = req.user_id
-    const id = user_id
+  .patch(jsonParser, (req, res, next) => {
+    // const { user_id } = req.params
+    const { user_id } = req.body
     const checked_out = true
 
-    InvoiceService.closeInvoice(req.app.get('db'), id, checked_out)
+    InvoiceService.closeInvoice(req.app.get('db'), user_id, checked_out)
       .then(() => {
         res.status(204)
-        InvoiceService.createNewCart(req.app.get('db'), id)
+        InvoiceService.createNewCart(req.app.get('db'), user_id)
           .then(() => {
             res.status(204).end()
           })
           .catch(next)
       })
       .catch(next)
+    // InvoiceService.createNewCart(req.app.get('db'), user_id)
+    //       .then(() => {
+    //         res.status(204).end()
+    //       })
+    //       .catch(next)
   })
 
   module.exports = invoiceRouter
