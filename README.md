@@ -72,6 +72,10 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### adds new item to user's cart (body requires: product_id, quantity)
 
+#### DELETE /api/cart
+
+##### empties current user's cart
+
 #### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
@@ -79,10 +83,6 @@ https://protected-oasis-11818.herokuapp.com
 #### GET /api/cart/history
 
 ##### gets order history of user
-
-#### DELETE /api/cart
-
-##### empties current user's cart
 
 #### PATCH /api/cart/history
 
