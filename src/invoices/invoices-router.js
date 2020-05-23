@@ -187,12 +187,13 @@ invoiceRouter
   })
 
   .patch(jsonParser, (req, res, next) => {
-    const { user_id } = req.params
+    const { id } = req.params
     const checked_out = true
 
-    InvoiceService.closeInvoice(req.app.get('db'), user_id, checked_out)
+    InvoiceService.closeInvoice(req.app.get('db'), id, checked_out)
       .then(() => {
-        InvoiceService.createNewCart(req.app.get('db'), user_id)
+        res.status(204)
+        InvoiceService.createNewCart(req.app.get('db'), id)
           .then(() => {
             res.status(204).end()
           })

@@ -463,9 +463,9 @@ function getCartById(id) {
   return thisCart
 }
 
-function addToCart(user_id, product_id) {
-  const invo_prod = makeInvoice_ProductsArray()
-}
+// function addToCart(user_id, product_id) {
+//   const invo_prod = makeInvoice_ProductsArray()
+// }
 
 // function seeds(db, users, products, invoices, invoice_products) {
 //   return Promise.all([
