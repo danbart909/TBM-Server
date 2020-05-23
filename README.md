@@ -52,39 +52,39 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### gets all products
 
-#### GET /api/products/:id ( = product.id)
+#### GET /api/products/:id ( = product id)
 
-##### gets info for product by :id
+##### gets info for product by id
 
 #### GET /api/products/categories
 
-##### lists current categories (which are currently animals, furniture, household, and vehicles)
+##### lists current categories
 
-#### GET /api/products/category/:category ( = product.category)
+#### GET /api/products/category/:category ( = animals, furniture, household, vehicles)
 
-##### lists all products in :category
+##### lists all products in given category
 
-#### GET /api/cart/:id ( = user.id)
+#### GET /api/cart
 
-##### returns the current cart for user id
+##### returns the users's current cart
 
 #### POST /api/cart
 
-##### adds new item to user's cart (body requires: user_id, product_id, and quantity)
+##### adds new item to user's cart (body requires: product_id, quantity)
+
+#### DELETE /api/cart
+
+##### empties current user's cart
 
 #### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
 
-#### GET /api/cart/history/:id ( = user.id)
+#### GET /api/cart/history
 
 ##### gets order history of user
 
-#### DELETE /api/cart
-
-##### empties specified user's cart (body requres: user_id)
-
-#### PATCH /api/cart/history/:id ( = user.id)
+#### PATCH /api/cart/history
 
 ##### checks out current shopping cart & creates a new empty cart
 
