@@ -72,10 +72,6 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### adds new item to user's cart (body requires: user_id, product_id, and quantity)
 
-#### PATCH /api/cart/invoice/:id ( = invoice.id)
-
-##### updates quantity of item in cart (body requires: quantity)
-
 #### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
@@ -88,9 +84,9 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### empties specified user's cart (body requres: user_id)
 
-#### PATCH /api/cart/history/:id
+#### PATCH /api/cart/history/:id ( = user.id)
 
-##### checks out current shopping cart (body requires: 'checked_out: false') & creates a new empty cart
+##### checks out current shopping cart & creates a new empty cart
 
     
     
