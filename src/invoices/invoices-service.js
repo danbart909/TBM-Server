@@ -28,14 +28,17 @@ const InvoiceService = {
   updateInvoice(knex, id, quantity) {
     return knex('invoice_products').where({ id }).update({ quantity })
   },
-  closeInvoice(knex, user_id ) {
-    return knex('invoices').where('user_id', user_id).join('users', 'invoices.user_id', 'users.id').update({ checked_out: true })
+  closeInvoice(knex, user_id) {
+    return knex('invoices').where({ user_id }).update({ checked_out: true })
   },
-  // closeInvoice(knex, user_id) {
-  //   return knex('invoices').where({ user_id }).update({ checked_out: true })
+  // closeInvoice2(knex, user_id) {
+  //   return knex('invoices').where( 'user_id', user_id ).update( 'checked_out', true )
+  // },
+  // closeInvoice3(knex, id, checked_out) {
+  //   return knex.from('invoices').where({ id }).update({ checked_out })
   // },
   createNewCart(knex, user_id) {
-    return knex.insert({user_id}).into('invoices').returning('*').then(rows => {
+    return knex.insert({ user_id }).into('invoices').returning('*').then(rows => {
       return rows[0]
     })
   }
