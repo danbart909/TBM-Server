@@ -463,18 +463,14 @@ function getCartById(id) {
   return thisCart
 }
 
-// function addToCart(user_id, product_id) {
-//   const invo_prod = makeInvoice_ProductsArray()
-// }
+function addToCart(newItem, cart) {
+  const nC = cart.concat(newItem)
+  return nC
+}
 
-// function seeds(db, users, products, invoices, invoice_products) {
-//   return Promise.all([
-//   seedUsers(db, users),
-//   seedProducts(db, products),
-//   seedInvoices(db, invoices),
-//   seedInvoice_Products(db, invoice_products)
-//   ])
-// }
+function deleteFromCart(id, cart) {
+  return cart - id
+}
 
 function seeds(db, users, products, invoices, invoice_products) {
   return db.transaction(async trx => {
@@ -515,5 +511,7 @@ module.exports = {
   makeAuthHeader,
   makeFixtures,
   categoryItems,
-  getCartById
+  getCartById,
+  addToCart,
+  deleteFromCart,
 }

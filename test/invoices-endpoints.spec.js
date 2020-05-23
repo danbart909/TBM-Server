@@ -4,7 +4,7 @@ const app = require('../src/app')
 const knex = require('knex')
 const helpers = require('./test-helpers')
 
-describe.only('Invoices Endpoints', function() {
+describe('Invoices Endpoints', function() {
   let db
 
   const {
@@ -46,7 +46,7 @@ describe.only('Invoices Endpoints', function() {
   describe(`POST /api/cart`, () => {
     context(`Given valid cart, user_id, and product_id`, () => {
       it (`responds with 200 and adds item to cart`, () => {
-        
+        const newItem = { id: 10, user_id: 1, product_id: 1 }
         return supertest(app)
         .get(`/api/cart`)
         .expect(200)
@@ -56,9 +56,13 @@ describe.only('Invoices Endpoints', function() {
 
   describe(`DELETE /api/cart/:id`, () => {
     context(`Given valid product_id in cart`, () => {
-      it (`responds with`, () => {
+      it (`responds with 200 and deletes item from cart`, () => {
+        const id = 2
+        const cart = 1
+        const newCart = helpers.deleteFromCart(id, cart)
+        const alsoCart = helpers.getCartById(cart)
         return supertest(app)
-        .get(`/api/cart`)
+        .get(`/api/cart/${id}`)
         .expect(200)
       })
     })
@@ -66,9 +70,9 @@ describe.only('Invoices Endpoints', function() {
 
   describe(`GET /api/cart/history/:id`, () => {
     context(`Given user has invoices that are checked_out: true`, () => {
-      it (`responds with`, () => {
+      it (`responds with order history of user`, () => {
         return supertest(app)
-        .get(`/api/cart`)
+        .get(`/api/cart/history/1`)
         .expect(200)
       })
     })
@@ -76,7 +80,7 @@ describe.only('Invoices Endpoints', function() {
 
   describe(`DELETE /api/cart/`, () => {
     context(`Given user has items in cart`, () => {
-      it (`responds with`, () => {
+      it (`responds with empty array`, () => {
         return supertest(app)
         .get(`/api/cart`)
         .expect(200)
@@ -86,10 +90,10 @@ describe.only('Invoices Endpoints', function() {
 
   describe(`PATCH /api/cart/history/:id`, () => {
     context(`Given user has items in cart`, () => {
-      it (`responds with`, () => {
+      it (`responds with invoices checked out and fresh new cart which is not checked out`, () => {
         return supertest(app)
-        .get(`/api/cart`)
-        .expect(200)
+        .patch(`/api/cart/history/1`)
+        .expect(204)
       })
     })
   })
