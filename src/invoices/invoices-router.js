@@ -95,30 +95,32 @@ invoiceRouter
 invoiceRouter
   .route('/checkout/:id')
 
-  .all(requireAuth, (req, res, next) => {
-    const { user_id } = req.user.id
-    console.log(user_id)
-    InvoiceService.getCartByUser(req.app.get('db'), user_id)
-      .then(cart => {
-        if (!cart) {
-          logger.error(`Cart ${id} not found.`)
-          return res.status(404).json({
-            error: { message: `Cart ${id} not found.` }
-          })
-        }
-        res.cart = cart
-        next()
-      })
-      .catch(next)
-  })
+  // .all(requireAuth, (req, res, next) => {
+  //   const { user_id } = req.user.id
+  //   console.log(user_id)
+  //   InvoiceService.getCartByUser(req.app.get('db'), user_id)
+  //     .then(cart => {
+  //       if (!cart) {
+  //         logger.error(`Cart ${id} not found.`)
+  //         return res.status(404).json({
+  //           error: { message: `Cart ${id} not found.` }
+  //         })
+  //       }
+  //       res.cart = cart
+  //       next()
+  //     })
+  //     .catch(next)
+  // })
 
-  .get((req, res) => {
-    res.json(res.cart)
-  })
+  // .get((req, res) => {
+  //   res.json(res.cart)
+  // })
 
   .patch(requireAuth, jsonParser, (req, res, next) => {
+    const randomNumber = req.params
     const user_id = req.user.id
     console.log(req.user.id)
+    console.log(randomNumber)
 
     InvoiceService.closeInvoice(req.app.get('db'), user_id)
       .then(() => {
