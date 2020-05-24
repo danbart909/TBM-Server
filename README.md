@@ -76,6 +76,10 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### empties current user's cart
 
+#### PATCH /api/cart
+
+##### checks out current shopping cart & creates a new empty cart
+
 #### DELETE /api/cart/:id ( = product.id)
 
 ##### deletes item in cart
@@ -83,10 +87,6 @@ https://protected-oasis-11818.herokuapp.com
 #### GET /api/cart/history
 
 ##### gets order history of user
-
-#### PATCH /api/cart/history
-
-##### checks out current shopping cart & creates a new empty cart
 
     
     
