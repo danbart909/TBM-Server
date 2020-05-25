@@ -93,8 +93,53 @@ invoiceRouter
 //     .catch(next)
 // })
 
-invoiceRouter
-  .route("/checkout/:id")
+// invoiceRouter
+//   .route("/checkout/:id")
+
+
+//   // .all(requireAuth, (req, res, next) => {
+//   //   const { user_id } = req.user.id
+//   //   console.log(user_id)
+//   //   InvoiceService.getCartByUser(req.app.get('db'), user_id)
+//   //     .then(cart => {
+//   //       if (!cart) {
+//   //         logger.error(`Cart ${id} not found.`)
+//   //         return res.status(404).json({
+//   //           error: { message: `Cart ${id} not found.` }
+//   //         })
+//   //       }
+//   //       res.cart = cart
+//   //       next()
+//   //     })
+//   //     .catch(next)
+//   // })
+
+//   // .get((req, res) => {
+//   //   res.json(res.cart)
+//   // })
+
+//   .patch(requireAuth, jsonParser, (req, res, next) => {
+//     // const randomNumber = req.params
+//     // let id = req.params
+//     // let user_id = id
+//     // console.log(id)
+//     // console.log(randomNumber)
+
+//     const user_id = req.user.id
+
+//     InvoiceService.closeInvoice(req.app.get('db'), user_id)
+//       .then(() => {
+//         InvoiceService.createNewCart(req.app.get('db'), user_id)
+//           .then(() => {
+//             res.status(204).end()
+//           })
+//           .catch(next)
+//       })
+//       .catch(next)
+//   })
+
+  invoiceRouter
+  .route('/checkout/:id')
 
   // .all(requireAuth, (req, res, next) => {
   //   const { user_id } = req.user.id
@@ -118,6 +163,7 @@ invoiceRouter
   // })
 
   .patch(requireAuth, jsonParser, (req, res, next) => {
+
     const randomNumber = req.params;
     const user_id = req.user.id;
     console.log("PATCH********", req.user.id);
@@ -244,47 +290,48 @@ invoiceRouter
 //     .catch(next)
 // })
 
-invoiceRouter
-  .route("/history")
+// invoiceRouter
+//   .route("/history")
+//   .route('/history/:id')
 
-  .all(requireAuth, (req, res, next) => {
-    const user_id = req.user.id;
-    const id = user_id;
-    console.log("ALL!!!!!!!!!!!!!!", user_id);
-    InvoiceService.getHistoryByUser(req.app.get("db"), id)
-      .then((invoice) => {
-        if (!invoice) {
-          logger.error(`Invoice ${id} not found.`);
-          return res.status(404).json({
-            error: { message: `Invoice ${id} not found.` },
-          });
-        }
-        res.invoice = invoice;
-        next();
-      })
-      .catch(next);
-  })
+//   .all(requireAuth, (req, res, next) => {
+//     const user_id = req.user.id;
+//     const id = user_id;
+//     console.log("ALL!!!!!!!!!!!!!!", user_id);
+//     InvoiceService.getHistoryByUser(req.app.get("db"), id)
+//       .then((invoice) => {
+//         if (!invoice) {
+//           logger.error(`Invoice ${id} not found.`);
+//           return res.status(404).json({
+//             error: { message: `Invoice ${id} not found.` },
+//           });
+//         }
+//         res.invoice = invoice;
+//         next();
+//       })
+//       .catch(next);
+//   })
 
-  .get((req, res) => {
-    res.json(res.invoice);
-  })
+//   .get((req, res) => {
+//     res.json(res.invoice);
+//   })
 
-  .patch(requireAuth, jsonParser, (req, res, next) => {
-    const user_id = req.user.id;
-    console.log(
-      "*****************************************!!!@@#$$%%^^&&*(())!!!!!!!",
-      user_id
-    );
+//   .patch(requireAuth, jsonParser, (req, res, next) => {
+//     const user_id = req.user.id;
+//     console.log(
+//       "*****************************************!!!@@#$$%%^^&&*(())!!!!!!!",
+//       user_id
+//     );
 
-    InvoiceService.closeInvoice(req.app.get("db"), user_id)
-      .then(() => {
-        InvoiceService.createNewCart(req.app.get("db"), user_id)
-          .then(() => {
-            res.status(204).end();
-          })
-          .catch(next);
-      })
-      .catch(next);
-  });
+//     InvoiceService.closeInvoice(req.app.get("db"), user_id)
+//       .then(() => {
+//         InvoiceService.createNewCart(req.app.get("db"), user_id)
+//           .then(() => {
+//             res.status(204).end();
+//           })
+//           .catch(next);
+//       })
+//       .catch(next);
+//   });
 
 module.exports = invoiceRouter;
