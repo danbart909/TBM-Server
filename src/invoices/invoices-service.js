@@ -61,7 +61,7 @@ const InvoiceService = {
   closeInvoice(knex, user_id) {
     console.log("*******************************CLOSE INVOICE!!!!!!!!!!!");
     console.log(user_id);
-    return knex("invoices").where({ user_id: 1 }).update({ checked_out: true });
+    return knex("invoices").where({ user_id }).update({ checked_out: true });
   },
   // closeInvoice2(knex, user_id) {
   //   return knex('invoices').where( 'user_id', user_id ).update( 'checked_out', true )
