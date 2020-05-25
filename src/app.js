@@ -8,7 +8,7 @@ const errorHandler = require('./error-handler')
 const productsRouter = require('./products/products-router')
 const userRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
-const invoiceRouter = require('./invoices/invoices-router-NOAUTH')
+const invoiceRouter = require('./invoices/invoices-router')
 
 const app = express()
 
