@@ -93,6 +93,50 @@ invoiceRouter
   // })
 
 invoiceRouter
+  .route('/checkout')
+
+  // .all(requireAuth, (req, res, next) => {
+  //   const { user_id } = req.user.id
+  //   console.log(user_id)
+  //   InvoiceService.getCartByUser(req.app.get('db'), user_id)
+  //     .then(cart => {
+  //       if (!cart) {
+  //         logger.error(`Cart ${id} not found.`)
+  //         return res.status(404).json({
+  //           error: { message: `Cart ${id} not found.` }
+  //         })
+  //       }
+  //       res.cart = cart
+  //       next()
+  //     })
+  //     .catch(next)
+  // })
+
+  // .get((req, res) => {
+  //   res.json(res.cart)
+  // })
+
+  .patch(requireAuth, jsonParser, (req, res, next) => {
+    // const randomNumber = req.params
+    // let id = req.params
+    // let user_id = id
+    // console.log(id)
+    // console.log(randomNumber)
+
+    const user_id = req.user.id
+
+    InvoiceService.closeInvoice(req.app.get('db'), user_id)
+      .then(() => {
+        InvoiceService.createNewCart(req.app.get('db'), user_id)
+          .then(() => {
+            res.status(204).end()
+          })
+          .catch(next)
+      })
+      .catch(next)
+  })
+
+  invoiceRouter
   .route('/checkout/:id')
 
   // .all(requireAuth, (req, res, next) => {
@@ -117,10 +161,13 @@ invoiceRouter
   // })
 
   .patch(requireAuth, jsonParser, (req, res, next) => {
-    const randomNumber = req.params
+    // const randomNumber = req.params
+    // let id = req.params
+    // let user_id = id
+    // console.log(id)
+    // console.log(randomNumber)
+
     const user_id = req.user.id
-    console.log(req.user.id)
-    console.log(randomNumber)
 
     InvoiceService.closeInvoice(req.app.get('db'), user_id)
       .then(() => {
@@ -244,7 +291,7 @@ invoiceRouter
 
 
 invoiceRouter
-  .route('/history')
+  .route('/history/:id')
 
   .all(requireAuth, (req, res, next) => {
     const { user_id } = req.user.id
