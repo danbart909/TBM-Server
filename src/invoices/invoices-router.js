@@ -290,48 +290,47 @@ invoiceRouter
 //     .catch(next)
 // })
 
-// invoiceRouter
-//   .route("/history")
-//   .route('/history/:id')
+invoiceRouter
+  .route("/history")
 
-//   .all(requireAuth, (req, res, next) => {
-//     const user_id = req.user.id;
-//     const id = user_id;
-//     console.log("ALL!!!!!!!!!!!!!!", user_id);
-//     InvoiceService.getHistoryByUser(req.app.get("db"), id)
-//       .then((invoice) => {
-//         if (!invoice) {
-//           logger.error(`Invoice ${id} not found.`);
-//           return res.status(404).json({
-//             error: { message: `Invoice ${id} not found.` },
-//           });
-//         }
-//         res.invoice = invoice;
-//         next();
-//       })
-//       .catch(next);
-//   })
+  .all(requireAuth, (req, res, next) => {
+    const user_id = req.user.id;
+    const id = user_id;
+    console.log("ALL!!!!!!!!!!!!!!", user_id);
+    InvoiceService.getHistoryByUser(req.app.get("db"), id)
+      .then((invoice) => {
+        if (!invoice) {
+          logger.error(`Invoice ${id} not found.`);
+          return res.status(404).json({
+            error: { message: `Invoice ${id} not found.` },
+          });
+        }
+        res.invoice = invoice;
+        next();
+      })
+      .catch(next);
+  })
 
-//   .get((req, res) => {
-//     res.json(res.invoice);
-//   })
+  .get((req, res) => {
+    res.json(res.invoice);
+  })
 
-//   .patch(requireAuth, jsonParser, (req, res, next) => {
-//     const user_id = req.user.id;
-//     console.log(
-//       "*****************************************!!!@@#$$%%^^&&*(())!!!!!!!",
-//       user_id
-//     );
+  .patch(requireAuth, jsonParser, (req, res, next) => {
+    const user_id = req.user.id;
+    console.log(
+      "*****************************************!!!@@#$$%%^^&&*(())!!!!!!!",
+      user_id
+    );
 
-//     InvoiceService.closeInvoice(req.app.get("db"), user_id)
-//       .then(() => {
-//         InvoiceService.createNewCart(req.app.get("db"), user_id)
-//           .then(() => {
-//             res.status(204).end();
-//           })
-//           .catch(next);
-//       })
-//       .catch(next);
-//   });
+    InvoiceService.closeInvoice(req.app.get("db"), user_id)
+      .then(() => {
+        InvoiceService.createNewCart(req.app.get("db"), user_id)
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(next);
+      })
+      .catch(next);
+  });
 
 module.exports = invoiceRouter;
