@@ -72,10 +72,10 @@ invoiceRouter
   });
 
 invoiceRouter
-  .route('/checkout/:id')
+  .route('/checkout')
 
   .all(requireAuth, (req, res, next) => {
-    const { user_id } = req.user.id
+    const user_id = req.user.id
     console.log(user_id)
     InvoiceService.getCartByUser(req.app.get('db'), user_id)
       .then(cart => {
@@ -106,64 +106,6 @@ invoiceRouter
       .then(() => {
         InvoiceService.createNewCart(req.app.get("db"), user_id)
           .then(() => {
-            res.status(204).end();
-          })
-          .catch(next);
-      })
-      .catch(next);
-  });
-
-invoiceRouter
-  .route("/:id")
-
-  .all(requireAuth, (req, res, next) => {
-    const { user_id } = req.user.id
-    console.log(user_id)
-    const id = user_id
-    InvoiceService.getCartByUser(req.app.get('db'), id)
-      .then(cart => {
-        if (!cart) {
-          logger.error(`Cart ${id} not found.`)
-          return res.status(404).json({
-            error: { message: `Cart ${id} not found.` }
-          })
-        }
-        res.cart = cart
-        next()
-      })
-      .catch(next)
-  })
-
-  .get((req, res) => {
-    res.json(res.cart)
-  })
-
-  .patch(requireAuth, jsonParser, (req, res, next) => {
-    const user_id = req.user.id;
-    const id = user_id;
-    const { quantity } = req.body;
-
-    InvoiceService.updateInvoice(req.app.get("db"), id, quantity)
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(next);
-  })
-
-  .delete(requireAuth, (req, res, next) => {
-    const { id: product_id } = req.params;
-    const user_id = req.user.id;
-
-    InvoiceService.getCurrentCartId(req.app.get("db"), user_id)
-      .then((invoice_id_raw) => {
-        let invoice_id = Number(invoice_id_raw);
-        InvoiceService.deleteItemInCart(
-          req.app.get("db"),
-          invoice_id,
-          product_id
-        )
-          .then(() => {
-            logger.info(`Items in cart with id ${invoice_id} deleted.`);
             res.status(204).end();
           })
           .catch(next);
@@ -245,6 +187,7 @@ invoiceRouter
   })
 
   .get((req, res) => {
+    console.log('*********************RES', res.invoice)
     res.json(res.invoice);
   })
 
@@ -259,6 +202,64 @@ invoiceRouter
       .then(() => {
         InvoiceService.createNewCart(req.app.get("db"), user_id)
           .then(() => {
+            res.status(204).end();
+          })
+          .catch(next);
+      })
+      .catch(next);
+  });
+
+invoiceRouter
+  .route("/:id")
+
+  .all(requireAuth, (req, res, next) => {
+    const user_id = req.user.id
+    console.log(user_id)
+    const id = user_id
+    InvoiceService.getCartByUser(req.app.get('db'), id)
+      .then(cart => {
+        if (!cart) {
+          logger.error(`Cart ${id} not found.`)
+          return res.status(404).json({
+            error: { message: `Cart ${id} not found.` }
+          })
+        }
+        res.cart = cart
+        next()
+      })
+      .catch(next)
+  })
+
+  .get((req, res) => {
+    res.json(res.cart)
+  })
+
+  .patch(requireAuth, jsonParser, (req, res, next) => {
+    const user_id = req.user.id;
+    const id = user_id;
+    const { quantity } = req.body;
+
+    InvoiceService.updateInvoice(req.app.get("db"), id, quantity)
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
+
+  .delete(requireAuth, (req, res, next) => {
+    const { id: product_id } = req.params;
+    const user_id = req.user.id;
+
+    InvoiceService.getCurrentCartId(req.app.get("db"), user_id)
+      .then((invoice_id_raw) => {
+        let invoice_id = Number(invoice_id_raw);
+        InvoiceService.deleteItemInCart(
+          req.app.get("db"),
+          invoice_id,
+          product_id
+        )
+          .then(() => {
+            logger.info(`Items in cart with id ${invoice_id} deleted.`);
             res.status(204).end();
           })
           .catch(next);

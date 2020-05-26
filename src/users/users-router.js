@@ -50,12 +50,16 @@ userRouter
                 newUser
               )
               .then(user => {
-                res
-                  .status(201)
-                  .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                  .json(UsersService.serializeUser(user))
-                  console.log(user.user_id)
-                  InvoiceService.createNewCart(req.app.get('db'), user.user_id)
+                InvoiceService.createNewCart(req.app.get('db'), user.id)
+                .then(() => {
+                  res
+                    .status(201)
+                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                    .json(UsersService.serializeUser(user))
+                    console.log(user.user_id)
+                })
+                  
+                  
               })
               })
         res.send('ok')
