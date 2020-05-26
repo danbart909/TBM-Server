@@ -12,14 +12,6 @@ const jsonParser = express.json();
 invoiceRouter
   .route("/")
 
-  // .get((req, res, next) => {
-  //   InvoiceService.getAllInvoices(req.app.get('db'))
-  //   .then(invoices => {
-  //     res.json({invoices})
-  //   })
-  //   .catch(next)
-  // })
-
   .all(requireAuth, (req, res, next) => {
     const user_id = req.user.id;
     console.log("ROUTE /", user_id);
@@ -79,88 +71,29 @@ invoiceRouter
       .catch(next);
   });
 
-// .patch(requireAuth, jsonParser, (req, res, next) => {
-//   const user_id = 1
-
-//   InvoiceService.closeInvoice(req.app.get('db'), user_id)
-//     .then(() => {
-//       InvoiceService.createNewCart(req.app.get('db'), user_id)
-//         .then(() => {
-//           res.status(204).end()
-//         })
-//         .catch(next)
-//     })
-//     .catch(next)
-// })
-
-// invoiceRouter
-//   .route("/checkout/:id")
-
-
-//   // .all(requireAuth, (req, res, next) => {
-//   //   const { user_id } = req.user.id
-//   //   console.log(user_id)
-//   //   InvoiceService.getCartByUser(req.app.get('db'), user_id)
-//   //     .then(cart => {
-//   //       if (!cart) {
-//   //         logger.error(`Cart ${id} not found.`)
-//   //         return res.status(404).json({
-//   //           error: { message: `Cart ${id} not found.` }
-//   //         })
-//   //       }
-//   //       res.cart = cart
-//   //       next()
-//   //     })
-//   //     .catch(next)
-//   // })
-
-//   // .get((req, res) => {
-//   //   res.json(res.cart)
-//   // })
-
-//   .patch(requireAuth, jsonParser, (req, res, next) => {
-//     // const randomNumber = req.params
-//     // let id = req.params
-//     // let user_id = id
-//     // console.log(id)
-//     // console.log(randomNumber)
-
-//     const user_id = req.user.id
-
-//     InvoiceService.closeInvoice(req.app.get('db'), user_id)
-//       .then(() => {
-//         InvoiceService.createNewCart(req.app.get('db'), user_id)
-//           .then(() => {
-//             res.status(204).end()
-//           })
-//           .catch(next)
-//       })
-//       .catch(next)
-//   })
-
-  invoiceRouter
+invoiceRouter
   .route('/checkout/:id')
 
-  // .all(requireAuth, (req, res, next) => {
-  //   const { user_id } = req.user.id
-  //   console.log(user_id)
-  //   InvoiceService.getCartByUser(req.app.get('db'), user_id)
-  //     .then(cart => {
-  //       if (!cart) {
-  //         logger.error(`Cart ${id} not found.`)
-  //         return res.status(404).json({
-  //           error: { message: `Cart ${id} not found.` }
-  //         })
-  //       }
-  //       res.cart = cart
-  //       next()
-  //     })
-  //     .catch(next)
-  // })
+  .all(requireAuth, (req, res, next) => {
+    const { user_id } = req.user.id
+    console.log(user_id)
+    InvoiceService.getCartByUser(req.app.get('db'), user_id)
+      .then(cart => {
+        if (!cart) {
+          logger.error(`Cart ${id} not found.`)
+          return res.status(404).json({
+            error: { message: `Cart ${id} not found.` }
+          })
+        }
+        res.cart = cart
+        next()
+      })
+      .catch(next)
+  })
 
-  // .get((req, res) => {
-  //   res.json(res.cart)
-  // })
+  .get((req, res) => {
+    res.json(res.cart)
+  })
 
   .patch(requireAuth, jsonParser, (req, res, next) => {
 
@@ -183,27 +116,27 @@ invoiceRouter
 invoiceRouter
   .route("/:id")
 
-  // .all(requireAuth, (req, res, next) => {
-  //   const { user_id } = req.user.id
-  //   console.log(user_id)
-  //   const id = user_id
-  //   InvoiceService.getCartByUser(req.app.get('db'), id)
-  //     .then(cart => {
-  //       if (!cart) {
-  //         logger.error(`Cart ${id} not found.`)
-  //         return res.status(404).json({
-  //           error: { message: `Cart ${id} not found.` }
-  //         })
-  //       }
-  //       res.cart = cart
-  //       next()
-  //     })
-  //     .catch(next)
-  // })
+  .all(requireAuth, (req, res, next) => {
+    const { user_id } = req.user.id
+    console.log(user_id)
+    const id = user_id
+    InvoiceService.getCartByUser(req.app.get('db'), id)
+      .then(cart => {
+        if (!cart) {
+          logger.error(`Cart ${id} not found.`)
+          return res.status(404).json({
+            error: { message: `Cart ${id} not found.` }
+          })
+        }
+        res.cart = cart
+        next()
+      })
+      .catch(next)
+  })
 
-  // .get((req, res) => {
-  //   res.json(res.cart)
-  // })
+  .get((req, res) => {
+    res.json(res.cart)
+  })
 
   .patch(requireAuth, jsonParser, (req, res, next) => {
     const user_id = req.user.id;
@@ -238,57 +171,57 @@ invoiceRouter
       .catch(next);
   });
 
-// invoiceRouter
-//   .route('/invoice/:id')
+invoiceRouter
+  .route('/invoice/:id')
 
-//   .all(requireAuth, (req, res, next) => {
-//     const { id } = req.params
-//     InvoiceService.getInvoice(req.app.get('db'), id)
-//       .then(invoice => {
-//         if (!invoice) {
-//           logger.error(`Invoice ${id} not found.`)
-//           return res.status(404).json({
-//             error: { message: `Invoice ${id} not found.` }
-//           })
-//         }
-//         res.invoice = invoice
-//         next()
-//       })
-//       .catch(next)
-//   })
+  .all(requireAuth, (req, res, next) => {
+    const { id } = req.params
+    InvoiceService.getInvoice(req.app.get('db'), id)
+      .then(invoice => {
+        if (!invoice) {
+          logger.error(`Invoice ${id} not found.`)
+          return res.status(404).json({
+            error: { message: `Invoice ${id} not found.` }
+          })
+        }
+        res.invoice = invoice
+        next()
+      })
+      .catch(next)
+  })
 
-//   .get((req, res) => {
-//     res.json(res.invoice)
-//   })
+  .get((req, res) => {
+    res.json(res.invoice)
+  })
 
-//   .patch(requireAuth, jsonParser, (req, res, next) => {
-//     const { id } = req.params
-//     const { quantity } = req.body
+  .patch(requireAuth, jsonParser, (req, res, next) => {
+    const { id } = req.params
+    const { quantity } = req.body
 
-//     InvoiceService.updateInvoice(req.app.get('db'), id, quantity)
-//       .then(() => {
-//         res.status(204).end()
-//       })
-//       .catch(next)
-//   })
+    InvoiceService.updateInvoice(req.app.get('db'), id, quantity)
+      .then(() => {
+        res.status(204).end()
+      })
+      .catch(next)
+  })
 
-// .delete((req, res, next) => {
-//   const { user_id } = req.body
+.delete((req, res, next) => {
+  const { user_id } = req.body
 
-//   InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
-//     .then(invoice_id_raw => {
-//       res
-//         .status(201)
-//         let invoice_id = Number(invoice_id_raw)
-//         InvoiceService.emptyCart(req.app.get('db'), invoice_id)
-//         .then(() => {
-//           logger.info(`Items in cart with id ${invoice_id} deleted.`)
-//           res.status(204).end()
-//         })
-//         .catch(next)
-//     })
-//     .catch(next)
-// })
+  InvoiceService.getCurrentCartId(req.app.get('db'), user_id)
+    .then(invoice_id_raw => {
+      res
+        .status(201)
+        let invoice_id = Number(invoice_id_raw)
+        InvoiceService.emptyCart(req.app.get('db'), invoice_id)
+        .then(() => {
+          logger.info(`Items in cart with id ${invoice_id} deleted.`)
+          res.status(204).end()
+        })
+        .catch(next)
+    })
+    .catch(next)
+})
 
 invoiceRouter
   .route("/history")
