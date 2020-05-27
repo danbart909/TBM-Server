@@ -84,7 +84,7 @@ https://protected-oasis-11818.herokuapp.com
 
 ##### gets order history of user
 
-#### PATCH /api/cart/checkout/1
+#### PATCH /api/cart/checkout
 
 ##### checks out current shopping cart & creates a new empty cart
 
