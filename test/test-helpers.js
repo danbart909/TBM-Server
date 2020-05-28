@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-// const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 function cleanTables(db) {
   return db.transaction(trx => 
@@ -455,7 +455,7 @@ function categoryItems(category) {
 function getCartById(id) {
   const allCarts = makeInvoice_ProductsArray()
   const thisCart = []
-  for (i = 0; i < allCarts.langth; i++) {
+  for (i = 0; i < allCarts.length; i++) {
     if (allCarts[i].user_id == id) {
       thisCart.push(allCarts[i])
     }
@@ -491,7 +491,7 @@ function makeFixtures() {
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_name,
+    subject: user.username,
     algorithm: 'HS256',
   })
   return `Bearer ${token}`

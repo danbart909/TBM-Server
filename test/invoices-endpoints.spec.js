@@ -31,24 +31,36 @@ describe('Invoices Endpoints', function() {
 
   afterEach('cleanup', () => helpers.cleanTables(db))
 
-  describe(`GET /api/cart/:id`, () => {
-    context(`Given the user has a cart`, () => {
-      it(`responds with 200 and the cart as a list`, () => {
-        const id = 1
-        const expectedCart = helpers.getCartById(id)
+  describe(`GET /api/cart`, () => {
+    context(`Given valid user id and non-checked out invoice`, () => {
+      it(`responds with 200 and current cart`, () =>{
         return supertest(app)
-        .get(`/api/cart/${1}`)
-        .expect(200, expectedCart)
+        .get(`/api/cart`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+        .expect(200)
       })
     })
   })
 
   describe(`POST /api/cart`, () => {
-    context(`Given valid cart, user_id, and product_id`, () => {
-      it (`responds with 200 and adds item to cart`, () => {
-        const newItem = { id: 10, user_id: 1, product_id: 1 }
+    context(`Given valid cart, user_id, product_id, and quantity`, () => {
+      it(`responds with 200 and adds item to cart`, () => {
+        const newItem = { id: 10, user_id: 1, product_id: 1, quantity: 2 }
+        return supertest(app)
+        .post(`/api/cart`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+        .send(newItem)
+        .expect(201)
+      })
+    })
+  })
+
+  describe(`DELETE /api/cart/`, () => {
+    context(`Given user has items in cart`, () => {
+      it(`responds with empty array`, () => {
         return supertest(app)
         .get(`/api/cart`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .expect(200)
       })
     })
@@ -56,44 +68,27 @@ describe('Invoices Endpoints', function() {
 
   describe(`DELETE /api/cart/:id`, () => {
     context(`Given valid product_id in cart`, () => {
-      it (`responds with 200 and deletes item from cart`, () => {
-        const id = 2
-        const cart = 1
-        const newCart = helpers.deleteFromCart(id, cart)
-        const alsoCart = helpers.getCartById(cart)
+      it(`responds with 200 and deletes item from cart`, () => {
+        const alsoCart = helpers.getCartById(1)
+        console.log(alsoCart)
         return supertest(app)
-        .get(`/api/cart/${id}`)
-        .expect(200)
-      })
-    })
-  })
-
-  describe(`GET /api/cart/history/:id`, () => {
-    context(`Given user has invoices that are checked_out: true`, () => {
-      it (`responds with order history of user`, () => {
-        return supertest(app)
-        .get(`/api/cart/history/1`)
-        .expect(200)
-      })
-    })
-  })
-
-  describe(`DELETE /api/cart/`, () => {
-    context(`Given user has items in cart`, () => {
-      it (`responds with empty array`, () => {
-        return supertest(app)
-        .get(`/api/cart`)
-        .expect(200)
-      })
-    })
-  })
-
-  describe(`PATCH /api/cart/history/:id`, () => {
-    context(`Given user has items in cart`, () => {
-      it (`responds with invoices checked out and fresh new cart which is not checked out`, () => {
-        return supertest(app)
-        .patch(`/api/cart/history/1`)
+        .del(`/api/cart/1`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .expect(204)
+      })
+    })
+  })
+
+  describe(`GET /api/cart/history`, () => {
+    context(`Given the user has a cart`, () => {
+      it(`responds with 200 and the cart as a list`, () => {
+        const id = 1
+        const expectedCart = helpers.getCartById(id)
+        console.log(expectedCart)
+        return supertest(app)
+        .get(`/api/cart/history`)
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+        .expect(200)
       })
     })
   })
