@@ -14,12 +14,13 @@ describe('Products Endpoints', function() {
     testInvoice_Products
   } = helpers.makeFixtures()
 
-  before('make knex instance', () => {
+  before('make knex instance', (done) => {
     db = knex({
       client: 'pg',
       connection: process.env.TEST_DATABASE_URL,
     })
     app.set('db', db)
+    done()
   })
 
   beforeEach('seed database', () =>

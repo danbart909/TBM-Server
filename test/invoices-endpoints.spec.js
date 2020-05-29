@@ -14,12 +14,13 @@ describe('Invoices Endpoints', function() {
     testInvoice_Products
   } = helpers.makeFixtures()
 
-  before('make knex instance', () => {
+  before('make knex instance', (done) => {
     db = knex({
       client: 'pg',
       connection: process.env.TEST_DATABASE_URL,
     })
     app.set('db', db)
+    done()
   })
 
   beforeEach('seed database', () =>
@@ -45,12 +46,15 @@ describe('Invoices Endpoints', function() {
   describe(`POST /api/cart`, () => {
     context(`Given valid cart, user_id, product_id, and quantity`, () => {
       it(`responds with 200 and adds item to cart`, () => {
-        const newItem = { id: 10, user_id: 1, product_id: 1, quantity: 2 }
+        const newItem = { product_id: 1, quantity: 2 }
         return supertest(app)
         .post(`/api/cart`)
         .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .send(newItem)
         .expect(201)
+          // .then(data => {
+          //   console.log(data.body)
+          // })
       })
     })
   })
